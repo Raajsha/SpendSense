@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
         enum : ["user", "admin"],
         default: "user"
     }
-},{timestamps: true});
+},{timestamps: true, versionKey: false});
 
 userSchema.pre('save',async function(next) {
 

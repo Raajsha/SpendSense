@@ -2,9 +2,10 @@ import express from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
 
+import { connectDB } from './config/DB.js'
+import rateLimiter from './middleware/rateLimiter.js'
 import authRoutes from './routes/authRoutes.js'
 import userRoutes from './routes/userRoutes.js'
-import { connectDB } from './config/DB.js'
 
 dotenv.config()
 const app = express()
@@ -15,12 +16,13 @@ app.use(cors({
     credentials : true
 }))
 app.use(express.json())
+app.use(rateLimiter)
 
 app.use('/auth',authRoutes);
-app.use('/profile',userRoutes)
+app.use('/profile',userRoutes);
 
 connectDB().then(() => {
     app.listen(PORT, () => {
     console.log(`Server is running on PORT ${PORT}`);
-})
+    })
 })
