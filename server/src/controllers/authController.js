@@ -20,7 +20,7 @@ export const registerUser = async (req,res) => {
         res.status(201).json({message: "User created sccessfully"})
     } catch (error) {
         res.status(500).json({message : "Failed to create user"})
-        console.log(error)
+        console.log(error)  
     }
 }
 

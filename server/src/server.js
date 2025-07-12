@@ -6,6 +6,9 @@ import { connectDB } from './config/DB.js'
 import rateLimiter from './middleware/rateLimiter.js'
 import authRoutes from './routes/authRoutes.js'
 import userRoutes from './routes/userRoutes.js'
+import transactionRoutes from './routes/transactionRoutes.js'
+import budgetRoutes from './routes/budgetRoutes.js'
+import authMiddleware from './middleware/authMiddleware.js'
 
 dotenv.config()
 const app = express()
@@ -19,7 +22,9 @@ app.use(express.json())
 app.use(rateLimiter)
 
 app.use('/auth',authRoutes);
-app.use('/profile',userRoutes);
+app.use('/profile',authMiddleware,userRoutes);
+app.use('/transaction',authMiddleware,transactionRoutes);
+app.use('/budgets',authMiddleware,budgetRoutes);
 
 connectDB().then(() => {
     app.listen(PORT, () => {

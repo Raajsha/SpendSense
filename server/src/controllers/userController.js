@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import bcrypt from "bcryptjs";
 
 export const getUserProfile = async (req,res) => {
     try {
@@ -19,6 +20,10 @@ export const updateProfile = async(req,res) => {
 
         if(!user) return res.status(404).json({message: "User not found"})
         
+        if(req.body.password) {
+            const salt = await bcrypt.genSalt(10)
+            req.body.password = await bcrypt.hash(req.body.password,salt)
+        }
         const updatedUser = await User.findByIdAndUpdate(id,{$set : req.body},{new : true})
 
         const displayUpdatedUser = await User.findById(id).select("-password")
