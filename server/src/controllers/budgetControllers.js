@@ -51,7 +51,9 @@ export const getBudget = async(req,res) => {
         if(budget) query.budget = budget
 
         const budgets = await Budget.find(query).sort({createdAt: -1})
+        res.status(200).json(budgets)
     } catch (error) {
-        
+        res.status(500).json({message: "Failed to fetch budgets"})
+        console.log(error)
     }
 }

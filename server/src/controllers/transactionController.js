@@ -60,7 +60,7 @@ export const getTxn = async(req,res) => {
         const {category, type, start ,end} = req.query;
         const query = {user: req.user.id}
 
-        if(type) query.type
+        if(type) query.type = type
         if(category) query.category = category
         if(start || end) {
             query.date = {}
