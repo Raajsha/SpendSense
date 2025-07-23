@@ -10,12 +10,12 @@ const Navbar = () => {
         navigate('/')
     }
   return (
-    <div className="sticky top-0 bg-white border-b border-gray-200 shadow-lg">
+    <div className="sticky top-0 bg-white border-b border-gray-200 shadow-lg ">
       <div className="container mx-auto px-4 ">
-        <div className="flex justify-between items-center min-h-20">
+        <div className="flex justify-between items-center min-h-16">
             <Link to ='/home'
-              className = 'flex items-center space-x-2 justify-right text-2xl font-bold transition-colors'>
-                <span>Speed Sense</span>
+              className = 'flex items-center space-x-2 justify-right text-2xl font-bold transition-colors bg-gradient-to-r from-teal-200 via-cyan-400 to-blue-600 bg-clip-text text-transparent'>
+                <span>Spend Sense</span>
             </Link>
 
             <div className="flex items-center space-x-4">

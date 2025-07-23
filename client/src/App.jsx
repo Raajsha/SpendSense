@@ -8,7 +8,7 @@ import DashBoard from './pages/DashBoard.jsx'
 
 const App = () => {
   return (
-    <div className='min-h-screen'>
+    <div className='min-h-screen overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-950'>
         <Navbar />
         <Routes>
             <Route path = '/' element={<Login />} />

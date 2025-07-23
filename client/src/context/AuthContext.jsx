@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { authAPI } from "../services/api.js";
 import toast from 'react-hot-toast'
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext()
 
@@ -36,7 +37,10 @@ export const AuthProvider = ({children}) => {
             setUser(userData)
 
             toast.success("Login Successful")
-            return {success: true}
+            if(userData.role === 'admin'){
+                return {success: true, isAdmin: true}
+            }
+            return {success: true, isAdmin: false}
         } catch (error) {
             const message = error.response?.data?.message || "Login failed"
             toast.error(message)
@@ -51,7 +55,7 @@ export const AuthProvider = ({children}) => {
             toast.success("Registered Successfully")
             return {success: true}
         } catch (error) {
-            const message = error?.response?.data?.message || "Registration failed"
+            const message = error.response?.data?.message || "Registration failed"
             toast.error(message)
             console.log(error)
             return {success: false, message}
@@ -71,7 +75,8 @@ export const AuthProvider = ({children}) => {
         register,
         logout,
         loading,
-        isAuthenticated : !!user
+        isAuthenticated : !!user,
+        isAdmin: user?.role === 'admin'
     }
 
     return (
