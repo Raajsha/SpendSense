@@ -13,9 +13,6 @@ import adminMiddleware from '../middleware/adminMiddleware.js';
 
 const router = express.Router();
 
-// Apply auth and admin middleware to all routes
-router.use(authMiddleware);
-router.use(adminMiddleware);
 
 // Admin dashboard stats
 router.get('/stats', getAdminStats);

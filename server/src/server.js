@@ -10,6 +10,7 @@ import transactionRoutes from './routes/transactionRoutes.js'
 import budgetRoutes from './routes/budgetRoutes.js'
 import adminRoutes from './routes/adminRoutes.js'
 import authMiddleware from './middleware/authMiddleware.js'
+import adminMiddleware from './middleware/adminMiddleware.js'
 
 dotenv.config()
 const app = express()
@@ -26,7 +27,7 @@ app.use('/auth',authRoutes);
 app.use('/profile',authMiddleware,userRoutes);
 app.use('/transaction',authMiddleware,transactionRoutes);
 app.use('/budgets',authMiddleware,budgetRoutes);
-app.use('/admin',adminRoutes);
+app.use('/admin',authMiddleware,adminMiddleware,adminRoutes);
 
 connectDB().then(() => {
     app.listen(PORT, () => {
