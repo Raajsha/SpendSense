@@ -33,33 +33,33 @@ const DashBoard = () => {
       </div>
       <div className="grid grid-cols-2 gap-6 max-w-4xl mx-auto">
         <Link to = '/transactions'>
-          <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-xl hover:shadow-blue-500 transition-shadow duration-300 bg-gradient-to-br from-blue-500 via-cyan-500 to-teal-600">
+          <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-xl hover:shadow-blue-500 hover:scale-105 transition-all duration-3000 bg-gradient-to-br from-blue-500 via-cyan-500 to-teal-600">
             <h2 className="text-2xl font-semibold mb-4">Transactions</h2>
             <p className="text-gray-600">View and manage your transactions.</p>
           </div>
         </Link>
         <Link to = '/budgets'>
-          <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-xl hover:shadow-blue-500 transition-shadow duration-300 bg-gradient-to-br from-blue-500 via-cyan-500 to-teal-600">
+          <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-xl hover:shadow-blue-500 hover:scale-105 transition-all duration-300 bg-gradient-to-br from-blue-500 via-cyan-500 to-teal-600">
             <h2 className="text-2xl font-semibold mb-4">Budgets</h2>
             <p className="text-gray-600">Decide your own limits</p>
           </div>
         </Link>
         <Link to = '/analytics'>
-          <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-xl hover:shadow-blue-500 transition-shadow duration-300 bg-gradient-to-br from-blue-500 via-cyan-500 to-teal-600">
+          <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-xl hover:shadow-blue-500 hover:scale-105 transition-all duration-300 bg-gradient-to-br from-blue-500 via-cyan-500 to-teal-600">
             <h2 className="text-2xl font-semibold mb-4">Analytics</h2>
             <p className="text-gray-600">Analyze areas of improvement in your spending</p>
           </div>
         </Link>
         {isAdmin ? (
         <Link to = '/admin'>
-          <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-xl hover:shadow-blue-500 transition-shadow duration-300 bg-gradient-to-br from-blue-500 via-cyan-500 to-teal-600">
+          <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-xl hover:shadow-blue-500 hover:scale-105 transition-all duration-300 bg-gradient-to-br from-blue-500 via-cyan-500 to-teal-600">
             <h2 className="text-2xl font-semibold mb-4">Admin Dashboard</h2>
             <p className="text-gray-600">More privileges for you</p>
           </div>
         </Link>
         ): (
         <Link to = '/home'>
-          <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-shadow duration-300 bg-gradient-to-br from-blue-500 via-cyan-500 to-teal-600">
+          <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-xl hover:scale-105 transition-all duration-300 bg-gradient-to-br from-blue-500 via-cyan-500 to-teal-600">
             <h2 className="text-2xl font-semibold mb-4">Stay Tuned</h2>
             <p className="text-gray-600">More features coming soon</p>
           </div>
