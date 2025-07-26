@@ -7,6 +7,7 @@ import DashBoard from './pages/DashBoard.jsx'
 import Transactions from './pages/Transactions.jsx'
 import Budgets from './pages/Budgets.jsx'
 import AddTransaction from './pages/AddTransaction.jsx'
+import EditTransaction from './pages/EditTransaction.jsx'
 
 
 const App = () => {
@@ -20,6 +21,7 @@ const App = () => {
             <Route path = '/transactions' element = {<Transactions/>} />
             <Route path = '/budgets' element = {<Budgets />} />
             <Route path = '/add-transaction' element = {<AddTransaction />} />
+            <Route path = '/edit-transaction/:id' element = {<EditTransaction />} />
         </Routes>
     </div>
   )

@@ -5,8 +5,8 @@ export const addTxn = async(req,res) => {
     if(!type || !category || !amount) {
         return res.status(400).json({message: "All required fields must be provided"})
     }
-
-    if(typeof amount !== 'number' || amount <= 0 ) return res.status(400).json({message: "Amount must be a positive number"})
+    const numAmount = Number(amount)
+    if(isNaN(numAmount)|| numAmount <= 0 ) return res.status(400).json({message: "Amount must be a positive number"})
 
     try {
         const newTxn = new Transaction({
@@ -68,11 +68,23 @@ export const getTxn = async(req,res) => {
             if(end) query.date.$lte = new Date(end)
         }
 
-        const txns = await Transaction.find(query).sort({date:-1}).select("-__v")
+        const txns = await Transaction.find(query).sort({date:-1, createdAt:-1}).select("-__v")
 
         res.status(200).json(txns)
     } catch (error) {
         res.status(500).json({message: "Failed to fetch Transactions"})
         console.log(error)
+    }
+}
+
+export const getTxnById = async(req,res) => {
+    const id= req.params.id
+    try {
+        const Txn = await Transaction.findById(id)
+        if(!Txn) return res.status(404).json({message: "Transaction not found"})
+        
+        res.status(200).json(Txn)
+    } catch (error) {
+        res.status(500).json({message: "Failed to get transaction"})
     }
 }

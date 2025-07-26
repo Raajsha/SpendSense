@@ -1,18 +1,19 @@
 import { transactionAPI } from "../services/api.js";
-import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useState,useEffect } from 'react';
+import { useNavigate,useParams,Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { ArrowLeftCircle } from "lucide-react";
 
-const AddTransaction = () => {
+const EditTransaction = () => {
+    const {id} = useParams()
     const [formData, setFormData] = useState({
         type: '',
         category: '',
         amount: '',
         note: '',
-        date: new Date().toISOString().split('T')[0] // Deafult to today's date
-    })
-    const [loading,setLoading] = useState(false)
+        date: new Date().toISOString().split('T')[0]
+    })    
+    const [loading,setLoading] = useState(true)
     const [errors, setErrors] = useState([])
     const navigate = useNavigate()
     const handleChange = (e) => {
@@ -25,6 +26,29 @@ const AddTransaction = () => {
             [e.target.name] : validate(e.target.name,e.target.value)
         })
     }
+
+    useEffect(() => {
+        const fetchPost = async () => {
+            try {
+                const response = await transactionAPI.getTxnById(id)
+                const data = response.data
+                console.log(data)
+                setFormData({
+                    type: data.type,
+                    category: data.category,
+                    amount: Number(data.amount),
+                    note : data.note,
+                    date: new Date(data.date).toISOString().split("T")[0]
+                })
+            } catch (error) {
+                toast.error("Failed to fetch post")
+                console.log(error)
+            } finally {
+                setLoading(false)
+            }
+        }
+        fetchPost();
+    },[id])
 
     const validate = (name,value) => {
         switch(name) {
@@ -65,7 +89,7 @@ const AddTransaction = () => {
         }
         setErrors({})
         try {
-            const response = await transactionAPI.addTxn(formData)
+            const response = await transactionAPI.updateTxn(id,formData)
             if(response.status === 200){
                 toast.success("Transaction added successfully")
                 navigate('/transactions')
@@ -79,15 +103,15 @@ const AddTransaction = () => {
     }
 
     return (
-        <div className="container backdrop-blur-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 shadow-lg rounded-2xl pb-6 pt-6 max-w-2xl mx-auto mt-4">
+        <div className="container backdrop-blur-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 shadow-lg rounded-2xl pb-6 pt-6 max-w-2xl mx-auto mt-2">
             <div className="flex items-center">
                 <Link to = '/transactions'>
-                    <ArrowLeftCircle className = 'ml-16 mr-24 text-white' size={40} />
+                    <ArrowLeftCircle className = 'ml-20 mr-24 text-white' size={40} />
                 </Link>
-                <h1 className="text-center text-4xl font-bold text-blue-300">Add Transaction</h1>
+                <h1 className="text-center text-4xl font-bold text-blue-300">Edit Transaction</h1>
             </div>
 
-            <form onSubmit = {handleSubmit} className="max-w-xl mx-auto p-6 text-white ">
+            <form onSubmit = {handleSubmit} className="max-w-xl mx-auto p-8 text-white ">
                 <div className="form-group">
                     <div>
                         <label htmlFor="amount" className="block mb-2 text-xl">Amount</label>
@@ -161,11 +185,11 @@ const AddTransaction = () => {
                 </div>
             </form>
             <div className=" w-full flex items-center justify-evenly">
-                <button type='submit'onClick= {handleSubmit} className="p-3 text-lg rounded-full bg-blue-700">Add transaction</button>
+                <button type='submit'onClick= {handleSubmit} className="p-3 text-lg rounded-full bg-blue-700">Edit Transaction</button>
             </div>
             
         </div>
     )
 }
 
-export default AddTransaction
+export default EditTransaction

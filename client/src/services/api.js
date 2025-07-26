@@ -44,6 +44,7 @@ export const budgetAPI = {
 
 export const transactionAPI = {
     getTxn : () => api.get('/transaction'),
+    getTxnById : (id) => api.get(`/transaction/${id}`),
     addTxn : (TxnData) => api.post('/transaction/add',TxnData),
     updateTxn : (id,TxnData) => api.put(`/transaction/${id}`,TxnData),
     deleteTxn : (id) => api.delete(`/transaction/${id}`)

@@ -6,7 +6,7 @@ import {Mail, Lock, Eye, EyeOff} from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 const Login = () => {
-    const {login} = useAuth()
+    const {login, isAuthenticated} = useAuth()
     const [loading, setLoading] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
     const [errors, setErrors] = useState({})
@@ -27,10 +27,8 @@ const Login = () => {
                     return "Invalid email format"
                 }
                 return undefined
-                break
             default:
                 return undefined
-                break
         }
     }
     const handleChange = (e) => {
@@ -70,6 +68,11 @@ const Login = () => {
             setLoading(false)
         }
     }
+    useEffect(() => {
+        if(isAuthenticated) {
+            navigate('/home')
+        }
+    })
   return (
     <div className='max-w-md mx-auto mt-12'>
         <div className="bg-white rounded-lg shadow-md p-8">
