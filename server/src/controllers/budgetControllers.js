@@ -42,7 +42,7 @@ export const deleteBudget = async (req,res) => {
     const id = req.params.id
     const exists = await Budget.findById(id)
     
-    if(!exists) return res.status(404),json({message: "Budget not found"})
+    if(!exists) return res.status(404).json({message: "Budget not found"})
 
     await Budget.findByIdAndDelete(id)
     res.status(200).json({message: "Budget deleted successfully"})
