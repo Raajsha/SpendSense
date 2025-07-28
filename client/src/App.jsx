@@ -5,9 +5,12 @@ import Login from './pages/Login.jsx'
 import SignUp from './pages/SignUp.jsx'
 import DashBoard from './pages/DashBoard.jsx'
 import Transactions from './pages/Transactions.jsx'
-import Budgets from './pages/Budgets.jsx'
 import AddTransaction from './pages/AddTransaction.jsx'
+import Budgets from './pages/Budgets.jsx'
 import EditTransaction from './pages/EditTransaction.jsx'
+import AddBudget from './pages/AddBudget.jsx'
+import EditBudget from './pages/EditBudget.jsx'
+
 
 
 const App = () => {
@@ -22,6 +25,8 @@ const App = () => {
             <Route path = '/budgets' element = {<Budgets />} />
             <Route path = '/add-transaction' element = {<AddTransaction />} />
             <Route path = '/edit-transaction/:id' element = {<EditTransaction />} />
+            <Route path = '/add-budget' element = {<AddBudget />} />
+            <Route path ='/edit-budget/:id' element = {<EditBudget />} />
         </Routes>
     </div>
   )

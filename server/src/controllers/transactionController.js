@@ -12,8 +12,8 @@ export const addTxn = async(req,res) => {
         const newTxn = new Transaction({
             user: req.user.id,
             type,
-            category,
-            amount,
+            category: String(category).toLowerCase(),
+            amount : numAmount,
             note,
             date
         })

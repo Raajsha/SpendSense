@@ -85,7 +85,7 @@ const Transactions = () => {
                                 Balance
                             </h2>
                             <p className="text-2xl font-bold text-blue-600">
-                                {totalIncome > totalExpenses ? (`$${(totalIncome - totalExpenses).toFixed(2)}`) : (`-$${(totalExpenses - totalIncome).toFixed(2)}`)}
+                                {totalIncome >= totalExpenses ? (`$${(totalIncome - totalExpenses).toFixed(2)}`) : (`-$${(totalExpenses - totalIncome).toFixed(2)}`)}
                             </p>
                         </div>
                         <div className="bg-blue-200 rounded-3xl p-4">

@@ -30,21 +30,26 @@ export const getBudgetWarnings = async(req,res) => {
 
         const expenseMap = {};
         expenses.forEach((e) => {
-            expenseMap[e._id] = e.totalSpent;
+            expenseMap[String(e._id).toLowerCase()] = e.totalSpent;
         });
 
-        const warnings = budgets.map((b) => {
+        const budgetsWithStats= budgets.map((b) => {
+            const categoryKey = String(b.category).toLowerCase()
             const spent = expenseMap[b.category] || 0;
             const warning = spent >= b.budget *0.8
             return {
+                _id: b._id,
+                user: b.user,
                 category: b.category,
                 budget : b.budget,
+                createdAt: b.createdAt,
+                updatedAt : b.updatedAt,
                 spent,
                 warning
             }
         })
 
-        res.status(200).json(warnings)
+        res.status(200).json(budgetsWithStats)
 
     } catch (error) {
         res.status(500).json({message: "Failed to get warnings"})

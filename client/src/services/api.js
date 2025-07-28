@@ -38,7 +38,8 @@ export const budgetAPI = {
     addBudget : (budgetData) => api.post('/budgets',budgetData),
     updateBudget : (id,budgetData) => api.put(`/budgets/${id}`,budgetData),
     deleteBudget : (id) => api.delete(`/budgets/${id}`),
-    getBudget : (params) => api.get('/budgets/get',{ params }),
+    getBudget : (params) => api.get('/budgets/',{ params }),
+    getBudgetById : (id) => api.get(`/budgets/${id}`),
     getWarnings : () => api.get('/budgets/warnings')
 }
 

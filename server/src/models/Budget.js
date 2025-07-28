@@ -13,8 +13,12 @@ const budgetSchema = new mongoose.Schema({
     budget : {
         type : Number,
         required: true
+    },
+    note : {
+        type: String,
+        required: false
     }
-},{timestamps: true, versionKey: false})
+},{timestamps: true,versionKey: false})
 
 const Budget = mongoose.model("Budget", budgetSchema);
 

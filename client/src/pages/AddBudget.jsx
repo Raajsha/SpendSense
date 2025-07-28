@@ -1,16 +1,14 @@
-import { transactionAPI } from "../services/api.js";
+import { budgetAPI } from "../services/api.js";
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { ArrowLeftCircle } from "lucide-react";
 
-const AddTransaction = () => {
+const AddBudget = () => {
     const [formData, setFormData] = useState({
-        type: '',
         category: '',
-        amount: '',
-        note: '',
-        date: new Date().toISOString().split('T')[0] // Deafult to today's date
+        budget: '',
+        note: ''
     })
     const [loading,setLoading] = useState(false)
     const [errors, setErrors] = useState([])
@@ -28,17 +26,12 @@ const AddTransaction = () => {
 
     const validate = (name,value) => {
         switch(name) {
-            case 'type':
-                if(!value) {
-                    return "Transaction type is required"
-                }
-                break;
             case 'category': 
                 if(!value) {
                     return "Category is required"
                 }
                 break;
-            case 'amount':
+            case 'budget':
                 if(!value || isNaN(value) || value <= 0) {
                     return "Enter a valid amount"
                 }
@@ -65,13 +58,13 @@ const AddTransaction = () => {
         }
         setErrors({})
         try {
-            const response = await transactionAPI.addTxn(formData)
+            const response = await budgetAPI.addBudget(formData)
             if(response.status === 200){
-                toast.success("Transaction added successfully")
-                navigate('/transactions')
+                toast.success("Budget added successfully")
+                navigate('/budgets')
             }
         } catch (error) {
-            toast.error("Failed to add transaction")
+            toast.error("Failed to add budget")
             console.log(error)
         } finally {
             setLoading(false)
@@ -79,46 +72,31 @@ const AddTransaction = () => {
     }
 
     return (
-        <div className="container backdrop-blur-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 shadow-lg rounded-2xl pb-6 pt-6 max-w-2xl mx-auto mt-4">
+        <div className="container backdrop-blur-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 shadow-lg rounded-2xl pb-6 pt-6 max-w-2xl mx-auto mt-12">
             <div className="flex items-center">
                 <Link to = '/transactions'>
-                    <ArrowLeftCircle className = 'ml-16 mr-24 text-white' size={40} />
+                    <ArrowLeftCircle className = 'ml-20 mr-24 text-white' size={40} />
                 </Link>
-                <h1 className="text-center text-4xl font-bold text-blue-300">Add Transaction</h1>
+                <h1 className="text-center text-4xl font-bold text-blue-300">Add a Budget</h1>
             </div>
 
             <form onSubmit = {handleSubmit} className="max-w-xl mx-auto p-6 text-white ">
                 <div className="form-group">
                     <div>
-                        <label htmlFor="amount" className="block mb-2 text-xl">Amount</label>
+                        <label htmlFor="budget" className="block mb-2 text-xl">Amount</label>
                         <input 
                             type = "number"
-                            id = 'amount'
-                            name = 'amount'
-                            value = {formData.amount}
+                            id = 'budget'
+                            name = 'budget'
+                            value = {formData.budget}
                             onChange={handleChange}
                             required
                             placeholder = "Enter amount"
                             className="w-full p-2 border border-gray-300 rounded-lg text-black"
                         />
-                        {errors.amount && <p className="text-red-500 font-medium text-sm">{errors.amount}</p>}
+                        {errors.budget && <p className="text-red-500 font-medium text-sm">{errors.budget}</p>}
                     </div>
-                    <div className="mt-2">
-                        <label htmlFor="type" className="block mb-2 text-xl">Transaction Type</label>
-                        <select 
-                            id = 'type'
-                            name = 'type'
-                            value = {formData.type}
-                            onChange={handleChange}
-                            required
-                            className="w-full p-2 border border-gray-300 rounded-lg text-black"
-                        >
-                            <option value="">Select type</option>
-                            <option value="income">Income</option>
-                            <option value="expense">Expense</option>
-                        </select>
-                        {errors.type && <p className="text-red-500 font-medium text-sm">{errors.type}</p>}
-                    </div>
+
                     <div className="mt-2">
                         <label htmlFor="category" className="block mb-2 text-xl">Category</label>
                         <input 
@@ -131,8 +109,9 @@ const AddTransaction = () => {
                             placeholder = "Enter the category"
                             className="w-full p-2 border border-gray-300 rounded-lg text-black"
                         />
-                        {errors.category && <p className="text-red-500 font-medium text-sm">{errors.amount}</p>}
+                        {errors.category && <p className="text-red-500 font-medium text-sm">{errors.category}</p>}
                     </div>
+
                     <div className="mt-2">
                         <label htmlFor="note" className="block mb-2 text-xl">Note</label>
                         <input 
@@ -145,27 +124,14 @@ const AddTransaction = () => {
                             className="w-full p-2 border border-gray-300 rounded-lg text-black"
                         />
                     </div>
-                    <div className="mt-2">
-                        <label htmlFor="date" className="block mb-2 text-xl">Date</label>
-                        <input 
-                            type = "date"
-                            id = 'date'
-                            name = 'date'
-                            value = {formData.date}
-                            onChange={handleChange}
-                            required
-                            placeholder = "Enter amount"
-                            className="w-full p-2 border border-gray-300 rounded-lg text-black"
-                        />
-                    </div>
                 </div>
             </form>
             <div className=" w-full flex items-center justify-evenly">
-                <button type='submit'onClick= {handleSubmit} className="p-3 text-lg rounded-full bg-blue-700">Add transaction</button>
+                <button type='submit'onClick= {handleSubmit} className="p-3 text-lg rounded-full bg-blue-700">Add budget</button>
             </div>
             
         </div>
     )
 }
 
-export default AddTransaction
+export default AddBudget

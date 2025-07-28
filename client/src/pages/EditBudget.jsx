@@ -1,17 +1,15 @@
-import { transactionAPI } from "../services/api.js";
+import { budgetAPI } from "../services/api.js";
 import { useState,useEffect } from 'react';
 import { useNavigate,useParams,Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { ArrowLeftCircle } from "lucide-react";
 
-const EditTransaction = () => {
+const EditBudget = () => {
     const {id} = useParams()
     const [formData, setFormData] = useState({
-        type: '',
         category: '',
-        amount: '',
+        budget: '',
         note: '',
-        date: new Date().toISOString().split('T')[0]
     })    
     const [loading,setLoading] = useState(true)
     const [errors, setErrors] = useState([])
@@ -30,15 +28,13 @@ const EditTransaction = () => {
     useEffect(() => {
         const fetchPost = async () => {
             try {
-                const response = await transactionAPI.getTxnById(id)
+                const response = await budgetAPI.getBudgetById(id)
                 const data = response.data
                 console.log(data)
                 setFormData({
-                    type: data.type,
                     category: data.category,
-                    amount: Number(data.amount),
-                    note : data.note,
-                    date: new Date(data.date).toISOString().split("T")[0]
+                    budget: Number(data.budget),
+                    note : data.note
                 })
             } catch (error) {
                 toast.error("Failed to fetch post")
@@ -52,17 +48,12 @@ const EditTransaction = () => {
 
     const validate = (name,value) => {
         switch(name) {
-            case 'type':
-                if(!value) {
-                    return "Transaction type is required"
-                }
-                break;
             case 'category': 
                 if(!value) {
                     return "Category is required"
                 }
                 break;
-            case 'amount':
+            case 'budget':
                 if(!value || isNaN(value) || value <= 0) {
                     return "Enter a valid amount"
                 }
@@ -89,13 +80,13 @@ const EditTransaction = () => {
         }
         setErrors({})
         try {
-            const response = await transactionAPI.updateTxn(id,formData)
+            const response = await budgetAPI.updateBudget(id, formData)
             if(response.status === 200){
-                toast.success("Transaction updated successfully")
-                navigate('/transactions')
+                toast.success("Budget updated successfully")
+                navigate('/budgets')
             }
         } catch (error) {
-            toast.error("Failed to update transaction")
+            toast.error("Failed to update budget")
             console.log(error)
         } finally {
             setLoading(false)
@@ -114,34 +105,18 @@ const EditTransaction = () => {
             <form onSubmit = {handleSubmit} className="max-w-xl mx-auto p-8 text-white ">
                 <div className="form-group">
                     <div>
-                        <label htmlFor="amount" className="block mb-2 text-xl">Amount</label>
+                        <label htmlFor="budget" className="block mb-2 text-xl">Amount</label>
                         <input 
                             type = "number"
-                            id = 'amount'
-                            name = 'amount'
-                            value = {formData.amount}
+                            id = 'budget'
+                            name = 'budget'
+                            value = {formData.budget}
                             onChange={handleChange}
                             required
                             placeholder = "Enter amount"
                             className="w-full p-2 border border-gray-300 rounded-lg text-black"
                         />
-                        {errors.amount && <p className="text-red-500 font-medium text-sm">{errors.amount}</p>}
-                    </div>
-                    <div className="mt-2">
-                        <label htmlFor="type" className="block mb-2 text-xl">Transaction Type</label>
-                        <select 
-                            id = 'type'
-                            name = 'type'
-                            value = {formData.type}
-                            onChange={handleChange}
-                            required
-                            className="w-full p-2 border border-gray-300 rounded-lg text-black"
-                        >
-                            <option value="">Select type</option>
-                            <option value="income">Income</option>
-                            <option value="expense">Expense</option>
-                        </select>
-                        {errors.type && <p className="text-red-500 font-medium text-sm">{errors.type}</p>}
+                        {errors.budget && <p className="text-red-500 font-medium text-sm">{errors.budget}</p>}
                     </div>
                     <div className="mt-2">
                         <label htmlFor="category" className="block mb-2 text-xl">Category</label>
@@ -163,33 +138,20 @@ const EditTransaction = () => {
                             type = "text"
                             id = 'note'
                             name = 'note'
-                            value = {formData.note}
+                            value = {formData.note || ''}
                             onChange={handleChange}
                             placeholder = "Write a note"
-                            className="w-full p-2 border border-gray-300 rounded-lg text-black"
-                        />
-                    </div>
-                    <div className="mt-2">
-                        <label htmlFor="date" className="block mb-2 text-xl">Date</label>
-                        <input 
-                            type = "date"
-                            id = 'date'
-                            name = 'date'
-                            value = {formData.date}
-                            onChange={handleChange}
-                            required
-                            placeholder = "Enter amount"
                             className="w-full p-2 border border-gray-300 rounded-lg text-black"
                         />
                     </div>
                 </div>
             </form>
             <div className=" w-full flex items-center justify-evenly">
-                <button type='submit'onClick= {handleSubmit} className="p-3 text-lg rounded-full bg-blue-700">Edit Transaction</button>
+                <button type='submit'onClick= {handleSubmit} className="p-3 text-lg rounded-full bg-blue-700">Edit Budget</button>
             </div>
             
         </div>
     )
 }
 
-export default EditTransaction
+export default EditBudget
