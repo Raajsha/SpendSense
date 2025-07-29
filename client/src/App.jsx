@@ -10,6 +10,7 @@ import Budgets from './pages/Budgets.jsx'
 import EditTransaction from './pages/EditTransaction.jsx'
 import AddBudget from './pages/AddBudget.jsx'
 import EditBudget from './pages/EditBudget.jsx'
+import BudgetDetails from './pages/BudgetDetails.jsx'
 
 
 
@@ -26,7 +27,8 @@ const App = () => {
             <Route path = '/add-transaction' element = {<AddTransaction />} />
             <Route path = '/edit-transaction/:id' element = {<EditTransaction />} />
             <Route path = '/add-budget' element = {<AddBudget />} />
-            <Route path ='/edit-budget/:id' element = {<EditBudget />} />
+            <Route path = '/edit-budget/:id' element = {<EditBudget />} />
+            <Route path = '/budgets/:id' element = {<BudgetDetails/>} />
         </Routes>
     </div>
   )

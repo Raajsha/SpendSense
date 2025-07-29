@@ -19,7 +19,7 @@ const BudgetCard = ({category, budget, spent, warning}) => {
     
     return (
         <div 
-          className={`bg-white shadow-md rounded-2xl p-4 flex flex-col items-center border-2 ${warning ? "border-red-500 hover:shadow-red-300" : "border-green-400 hover:shadow-green-200"} hover:scale-105 `}>
+          className={`bg-white shadow-md rounded-2xl p-4 flex flex-col items-center border-2 ${warning ? "border-red-500 hover:shadow-red-300" : "border-green-400 hover:shadow-green-200"} hover:scale-105 hover:cursor-pointer`}>
             <h3 className="text-xl font-semibold">{category.charAt(0).toUpperCase() +category.slice(1)}</h3>
             <p className="text-sm text-gray-600">Budget: ${budget}</p>
             <p className="text-sm text-gray-600">Spent: ${spent}</p>
@@ -62,13 +62,16 @@ const BudgetGrid = ({ budgets,setBudgets}) => {
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       {budgets.map((b) => (
         <div key={b._id}>
-          <BudgetCard
-            category={b.category}
-            budget={b.budget}
-            spent={b.spent}
-            warning={b.warning}
-            id = {b._id}
-          />
+          <Link to = {`/budgets/${b._id}`}>
+            <BudgetCard
+              category={b.category}
+              budget={b.budget}
+              spent={b.spent}
+              warning={b.warning}
+              id = {b._id}
+            />
+          </Link>
+          
           <div className="mx-auto flex items-center mt-2 ml-2">
             <Link to = {`/edit-budget/${b._id}`} className="text-blue-500 hover:text-blue-300 flex items-center space-x-1 mr-5 ">
               <Edit size = {16} />
