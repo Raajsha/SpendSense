@@ -11,6 +11,8 @@ import EditTransaction from './pages/EditTransaction.jsx'
 import AddBudget from './pages/AddBudget.jsx'
 import EditBudget from './pages/EditBudget.jsx'
 import BudgetDetails from './pages/BudgetDetails.jsx'
+import Analytics from './pages/Analytics.jsx'
+import ProtectedRoute from './components/ProtectedRoute.jsx'
 
 
 
@@ -21,14 +23,78 @@ const App = () => {
         <Routes>
             <Route path = '/' element={<Login />} />
             <Route path = '/signup' element = {<SignUp />} />
-            <Route path = '/home' element = {<DashBoard />} />
-            <Route path = '/transactions' element = {<Transactions/>} />
-            <Route path = '/budgets' element = {<Budgets />} />
-            <Route path = '/add-transaction' element = {<AddTransaction />} />
-            <Route path = '/edit-transaction/:id' element = {<EditTransaction />} />
-            <Route path = '/add-budget' element = {<AddBudget />} />
-            <Route path = '/edit-budget/:id' element = {<EditBudget />} />
-            <Route path = '/budgets/:id' element = {<BudgetDetails/>} />
+            <Route 
+              path = '/home' 
+              element = {
+              <ProtectedRoute>
+                <DashBoard />
+              </ProtectedRoute>
+            } />
+
+            <Route 
+              path = '/transactions'
+              element = {
+              <ProtectedRoute>
+                <Transactions/>
+              </ProtectedRoute>
+            } />
+
+            <Route 
+              path = '/budgets' 
+              element = {
+              <ProtectedRoute>
+                <Budgets />
+              </ProtectedRoute>
+            } />
+
+            <Route 
+              path = '/add-transaction' 
+              element = {
+              <ProtectedRoute>
+                <AddTransaction />
+              </ProtectedRoute>
+            } />
+
+            <Route 
+              path = '/edit-transaction/:id' 
+              element = {
+              <ProtectedRoute>
+                <EditTransaction />
+              </ProtectedRoute>
+            } />
+
+            <Route 
+              path = '/add-budget' 
+              element = {
+              <ProtectedRoute>
+                <AddBudget />
+              </ProtectedRoute>
+            } />
+            
+            <Route 
+              path = '/edit-budget/:id' 
+              element = {
+              <ProtectedRoute>
+                <EditBudget />
+              </ProtectedRoute>
+            } />
+
+            <Route 
+              path = '/budgets/:id' 
+              element = {
+              <ProtectedRoute>
+                <BudgetDetails/>
+              </ProtectedRoute>
+            } />
+
+            <Route 
+              path ='/analytics' 
+              element = {
+              <ProtectedRoute>
+                <Analytics />
+              </ProtectedRoute>
+            } />
+            
         </Routes>
     </div>
   )

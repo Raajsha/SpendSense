@@ -35,7 +35,7 @@ export const getBudgetWarnings = async(req,res) => {
 
         const budgetsWithStats= budgets.map((b) => {
             const categoryKey = String(b.category).toLowerCase()
-            const spent = expenseMap[b.category] || 0;
+            const spent = expenseMap[categoryKey] || 0;
             const warning = spent >= b.budget *0.8
             return {
                 _id: b._id,
